@@ -13,41 +13,10 @@
         <div class="demo-item">
           <chrome-picker :value="colors" @input="updateValue"></chrome-picker>
           <h6>Chrome</h6>
+          <h4>{{ colors }}</h4>
         </div>
       </header>
     </div>
-
-    <div class="demo-container">
-      <div class="demo-list">
-        <div class="demo-item">
-          <sketch-picker v-model="colors"></sketch-picker>
-          <h6>Sketch</h6>
-        </div>
-        <div class="demo-item">
-          <photoshop-picker v-model="colors" @ok="onOk" @cancel="onCancel"></photoshop-picker>
-          <h6>Photoshop</h6>
-        </div>
-      </div>
-      <div class="demo-list">
-        <div class="demo-item">
-          <material-picker v-model="colors"></material-picker>
-          <h6>Material</h6>
-        </div>
-        <div class="demo-item">
-          <slider-picker v-model="colors"></slider-picker>
-          <h6>Slider</h6>
-        </div>
-      </div>
-      <div class="demo-list">
-        <div class="demo-item">
-          <compact-picker v-model="colors"></compact-picker>
-          <h6>Compact</h6>
-        </div>
-        <div class="demo-item">
-          <swatches-picker v-model="colors"></swatches-picker>
-          <h6>Swatches</h6>
-        </div>
-      </div>
 
 
     </div>
@@ -55,13 +24,7 @@
 </template>
 
 <script>
-import material from '../src/components/Material.vue'
-import compact from '../src/components/Compact.vue'
-import swatches from '../src/components/Swatches.vue'
-import slider from '../src/components/Slider.vue'
-import sketch from '../src/components/Sketch.vue'
 import chrome from '../src/components/Chrome.vue'
-import photoshop from '../src/components/Photoshop.vue'
 
 let defaultProps = {
   hex: '#194d33',
@@ -88,13 +51,7 @@ let defaultProps = {
 
 export default {
   components: {
-    'material-picker': material,
-    'compact-picker': compact,
-    'swatches-picker': swatches,
-    'slider-picker': slider,
-    'sketch-picker': sketch,
-    'chrome-picker': chrome,
-    'photoshop-picker': photoshop
+    'chrome-picker': chrome
   },
   data () {
     return {

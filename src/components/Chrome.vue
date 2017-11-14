@@ -7,81 +7,23 @@
       <div class="vc-chrome-controls">
         <div class="vc-chrome-color-wrap">
           <div class="vc-chrome-active-color" :style="{background: activeColor}"></div>
-          <checkboard v-if="!disableAlpha"></checkboard>
         </div>
 
         <div class="vc-chrome-sliders">
           <div class="vc-chrome-hue-wrap">
             <hue v-model="colors" @change="childChange"></hue>
           </div>
-          <div class="vc-chrome-alpha-wrap" v-if="!disableAlpha">
-            <alpha v-model="colors" @change="childChange"></alpha>
-          </div>
         </div>
       </div>
-      
-      <div class="vc-chrome-fields-wrap">
-        <div class="vc-chrome-fields" v-show="fieldsIndex === 0">
-          <!-- hex -->
-          <div class="vc-chrome-field">
-            <ed-in label="hex" :value="colors.hex" @change="inputChange"></ed-in>  
-          </div>
-        </div>
-        <div class="vc-chrome-fields" v-show="fieldsIndex === 1">
-          <!-- rgba -->
-          <div class="vc-chrome-field">
-            <ed-in label="r" :value="colors.rgba.r" @change="inputChange"></ed-in>
-          </div>
-          <div class="vc-chrome-field">
-            <ed-in label="g" :value="colors.rgba.g" @change="inputChange"></ed-in>
-          </div>
-          <div class="vc-chrome-field">
-            <ed-in label="b" :value="colors.rgba.b" @change="inputChange"></ed-in>
-          </div>
-          <div class="vc-chrome-field" v-if="!disableAlpha">
-            <ed-in label="a" :value="colors.a" :arrow-offset="0.01" :max="1" @change="inputChange"></ed-in>
-          </div>
-        </div>
-        <div class="vc-chrome-fields" v-show="fieldsIndex === 2">
-          <!-- hsla -->
-          <div class="vc-chrome-field">
-            <ed-in label="h" :value="hsl.h" @change="inputChange"></ed-in>
-          </div>
-          <div class="vc-chrome-field"> 
-            <ed-in label="s" :value="hsl.s" @change="inputChange"></ed-in>
-          </div>
-          <div class="vc-chrome-field">
-            <ed-in label="l" :value="hsl.l" @change="inputChange"></ed-in>
-          </div>
-          <div class="vc-chrome-field" v-if="!disableAlpha">
-            <ed-in label="a" :value="colors.a" :arrow-offset="0.01" :max="1" @change="inputChange"></ed-in>
-          </div>
-        </div>
-        <!-- btn -->
-        <div class="vc-chrome-toggle-btn" @click="toggleViews">
-          <div class="vc-chrome-toggle-icon">
-            <svg style="width:24px; height:24px" viewBox="0 0 24 24" 
-              @mouseover="showHighlight" 
-              @mouseenter="showHighlight" 
-              @mouseout="hideHighlight">
-              <path fill="#333" d="M12,18.17L8.83,15L7.42,16.41L12,21L16.59,16.41L15.17,15M12,5.83L15.17,9L16.58,7.59L12,3L7.41,7.59L8.83,9L12,5.83Z" />
-            </svg>
-          </div>
-          <div class="vc-chrome-toggle-icon-highlight" v-show="highlight"></div>
-        </div>
-        <!-- btn -->
-      </div>      
+
     </div>
   </div>
 </template>
 
 <script>
 import colorMixin from '../mixin/color'
-import editableInput from './common/EditableInput.vue'
 import saturation from './common/Saturation.vue'
 import hue from './common/Hue.vue'
-import alpha from './common/Alpha.vue'
-import checkboard from './common/Checkboard.vue'
 
 export default {
   name: 'Chrome',
@@ -89,15 +31,12 @@ export default {
   props: {
     disableAlpha: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   components: {
     saturation,
-    hue,
-    alpha,
-    'ed-in': editableInput,
-    checkboard
+    hue
   },
   data () {
     return {
@@ -137,48 +76,6 @@ export default {
     },
     childChange (data) {
       this.colorChange(data)
-    },
-    inputChange (data) {
-      if (!data) {
-        return
-      }
-      if (data.hex) {
-        this.isValidHex(data.hex) && this.colorChange({
-          hex: data.hex,
-          source: 'hex'
-        })
-      } else if (data.r || data.g || data.b || data.a) {
-        this.colorChange({
-          r: data.r || this.colors.rgba.r,
-          g: data.g || this.colors.rgba.g,
-          b: data.b || this.colors.rgba.b,
-          a: data.a || this.colors.rgba.a,
-          source: 'rgba'
-        })
-      } else if (data.h || data.s || data.l) {
-        const s = data.s ? (data.s.replace('%', '') / 100) : this.colors.hsl.s
-        const l = data.l ? (data.l.replace('%', '') / 100) : this.colors.hsl.l
-
-        this.colorChange({
-          h: data.h || this.colors.hsl.h,
-          s,
-          l,
-          source: 'hsl'
-        })
-      }
-    },
-    toggleViews () {
-      if (this.fieldsIndex >= 2) {
-        this.fieldsIndex = this.colors.a < 1 ? 1 : 0
-        return
-      }
-      this.fieldsIndex ++
-    },
-    showHighlight () {
-      this.highlight = true
-    },
-    hideHighlight () {
-      this.highlight = false
     }
   }
 }
@@ -276,7 +173,7 @@ export default {
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 }
 .vc-chrome-body {
-  padding: 16px 16px 12px;
+  padding: 12px 16px 12px;
   background-color: #fff;
 }
 .vc-chrome-saturation-wrap {
@@ -289,26 +186,6 @@ export default {
 .vc-chrome-saturation-wrap .vc-saturation-circle {
   width: 12px;
   height: 12px;
-}
-
-.vc-chrome-fields .vc-input__input {
-  font-size: 11px;
-  color: #333;
-  width: 100%;
-  border-radius: 2px;
-  border: none;
-  box-shadow: inset 0 0 0 1px #dadada;
-  height: 21px;
-  text-align: center;
-}
-.vc-chrome-fields .vc-input__label {
-  text-transform: uppercase;
-  font-size: 11px;
-  line-height: 11px;
-  color: #969696;
-  text-align: center;
-  display: block;
-  margin-top: 12px;
 }
 
 .vc-chrome__disable-alpha .vc-chrome-active-color {
