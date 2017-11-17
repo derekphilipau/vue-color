@@ -80,7 +80,7 @@ export default {
       return '#CCCCCC'
     },
     buttonTextColor () {
-      if (this.colors.hsl.l > 0.4) {
+      if (this.colors.hsv.v > 0.45 && this.colors.hsv.h < 200) {
         return '#000000'
       }
       return '#FFFFFF'
