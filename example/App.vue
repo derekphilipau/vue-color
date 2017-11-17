@@ -17,12 +17,10 @@
                   @click="togglePicker">{{ buttonText }}</button>
           <chrome-picker v-if="isPickingColor" :value="colors" @input="updateValue"></chrome-picker>
           <h6>Chrome</h6>
-          <h4>{{ colors }}</h4>
+          <pre>{{ colors }}</pre>
         </div>
       </header>
     </div>
-
-
     </div>
   </div>
 </template>
@@ -82,12 +80,11 @@ export default {
     buttonTextColor () {
       // Still don't know the best way to do this
       // Combination of hue & value better
-      if (this.colors.rgba.r > 140 ||
-        this.colors.rgba.g > 140 ||
-        this.colors.rgba.b > 140) {
-        return '#000000'
+      if ((this.colors.hsv.h > 200 && this.colors.hsv.s > 0.8) ||
+        (this.colors.hsv.v < 0.5)) {
+        return '#FFFFFF'
       }
-      return '#FFFFFF'
+      return '#000000'
     }
   },
   methods: {
@@ -163,6 +160,7 @@ html {
 }
 
 .demo-item {
+  width: 300px;
   position: relative;
   margin-bottom: 10px;
   margin: 0 10px 0 10px;
