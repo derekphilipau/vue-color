@@ -80,7 +80,11 @@ export default {
       return '#CCCCCC'
     },
     buttonTextColor () {
-      if (this.colors.hsv.v > 0.45 && this.colors.hsv.h < 200) {
+      // Still don't know the best way to do this
+      // Combination of hue & value better
+      if (this.colors.rgba.r > 140 ||
+        this.colors.rgba.g > 140 ||
+        this.colors.rgba.b > 140) {
         return '#000000'
       }
       return '#FFFFFF'
