@@ -7,11 +7,15 @@
         <div class="intro-wrap">
           <div class="intro">
             <h1>Vue-color</h1>
-            <p>A Collection of Color Pickers from Sketch, Photoshop, Chrome, Github, Twitter, Material Design & more</p>
+            <p>Just the modified Chrome picker</p>
           </div>
         </div>
         <div class="demo-item">
-          <chrome-picker :value="colors" @input="updateValue"></chrome-picker>
+          <button type="button"
+                  class="color-button"
+                  :style="{'background-color': buttonColor, 'color': buttonTextColor}"
+                  @click="togglePicker">{{ buttonText }}</button>
+          <chrome-picker v-if="isPickingColor" :value="colors" @input="updateValue"></chrome-picker>
           <h6>Chrome</h6>
           <h4>{{ colors }}</h4>
         </div>
@@ -55,15 +59,37 @@ export default {
   },
   data () {
     return {
-      colors: defaultProps
+      colors: defaultProps,
+      isPickingColor: false
     }
   },
   computed: {
     bgc () {
       return this.colors.hex
+    },
+    buttonText () {
+      if (this.isPickingColor) {
+        return 'Choose Color'
+      }
+      return 'Pick a Color'
+    },
+    buttonColor () {
+      if (this.colors.hex) {
+        return this.colors.hex
+      }
+      return '#CCCCCC'
+    },
+    buttonTextColor () {
+      if (this.colors.hsl.l > 0.4) {
+        return '#000000'
+      }
+      return '#FFFFFF'
     }
   },
   methods: {
+    togglePicker () {
+      this.isPickingColor = !this.isPickingColor
+    },
     onOk () {
       console.log('ok')
     },
@@ -126,17 +152,12 @@ html {
   line-height: 22px;
 }
 
-.demo-container {
-  max-width: 780px;
-  min-height: 800px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
+.color-button {
+  padding: 10px 20px;
+  border: none;
+  margin-bottom: 10px;
 }
-.demo-list {
-  display: flex;
-  margin-bottom: 20px;
-}
+
 .demo-item {
   position: relative;
   margin-bottom: 10px;

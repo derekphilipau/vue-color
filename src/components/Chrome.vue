@@ -5,10 +5,6 @@
     </div>
     <div class="vc-chrome-body">
       <div class="vc-chrome-controls">
-        <div class="vc-chrome-color-wrap">
-          <div class="vc-chrome-active-color" :style="{background: activeColor}"></div>
-        </div>
-
         <div class="vc-chrome-sliders">
           <div class="vc-chrome-hue-wrap">
             <hue v-model="colors" @change="childChange"></hue>
@@ -83,97 +79,32 @@ export default {
 
 <style>
 .vc-chrome {
-  background: #fff;
-  border-radius: 2px;
-  box-shadow: 0 0 2px rgba(0,0,0,.3), 0 4px 8px rgba(0,0,0,.3);
   box-sizing: initial;
-  width: 225px;
-  font-family: Menlo;
+  width: 100%;
   background-color: #fff;
+  background: #fff;
 }
 .vc-chrome-controls {
   display: flex;
 }
-.vc-chrome-color-wrap {
-  position: relative;
-  width: 36px;
-}
-.vc-chrome-active-color {
-  position: relative;
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  overflow: hidden;
-  z-index: 1;
-}
-.vc-chrome-color-wrap .vc-checkerboard {
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  background-size: auto;
-}
 .vc-chrome-sliders {
   flex: 1;
-}
-.vc-chrome-fields-wrap {
-  display: flex;
-  padding-top: 16px;
-}
-.vc-chrome-fields {
-  display: flex;
-  margin-left: -6px;
-  flex: 1;
-}
-.vc-chrome-field {
-  padding-left: 6px;
-  width: 100%;
-}
-.vc-chrome-toggle-btn {
-  width: 32px;
-  text-align: right;
-  position: relative;
-}
-.vc-chrome-toggle-icon {
-  margin-right: -4px;
-  margin-top: 12px;
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-}
-.vc-chrome-toggle-icon-highlight {
-  position: absolute;
-  width: 24px;
-  height: 28px;
-  background: #eee;
-  border-radius: 4px;
-  top: 10px;
-  left: 12px;
 }
 .vc-chrome-hue-wrap {
   position: relative;
   height: 10px;
   margin-bottom: 8px;
 }
-.vc-chrome-alpha-wrap {
-  position: relative;
-  height: 10px;
-}
-.vc-chrome-hue-wrap .vc-hue {
-  border-radius: 2px;
-}
-.vc-chrome-alpha-wrap .vc-alpha-gradient {
-  border-radius: 2px;
-}
 .vc-chrome-hue-wrap .vc-hue-picker, .vc-chrome-alpha-wrap .vc-alpha-picker {
-  width: 12px;
-  height: 12px;
-  border-radius: 6px;
-  transform: translate(-6px, -2px);
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  transform: translate(-10px, -6px);
   background-color: rgb(248, 248, 248);
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.6);
 }
 .vc-chrome-body {
-  padding: 12px 16px 12px;
+  padding: 10px 15px;
   background-color: #fff;
 }
 .vc-chrome-saturation-wrap {
@@ -186,14 +117,6 @@ export default {
 .vc-chrome-saturation-wrap .vc-saturation-circle {
   width: 12px;
   height: 12px;
-}
-
-.vc-chrome__disable-alpha .vc-chrome-active-color {
-  width: 18px;
-  height: 18px;
-}
-.vc-chrome__disable-alpha .vc-chrome-color-wrap {
-  width: 30px;
 }
 .vc-chrome__disable-alpha .vc-chrome-hue-wrap {
   margin-top: 4px;
